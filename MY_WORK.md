@@ -29,10 +29,10 @@
 
 | Field | Your Answer |
 |-------|-------------|
-| **Full Name** | [Write your full name here] |
-| **Student ID** | [Write your student ID here] |
-| **University Email** | [yourid]@std.psau.edu.sa |
-| **GitHub Username** | [your-github-username] |
+| **Full Name** | [Razan Ahmed ajshahrani] |
+| **Student ID** | [446051753] |
+| **University Email** | [446051753]@std.psau.edu.sa |
+| **GitHub Username** | [razan446051753] |
 | **Repository Link** | [Paste your repository link here] |
  
 ---
@@ -129,70 +129,101 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
-**What I did**:
+### Entry 1 - [October 5 , 2026, 6:00 pm]
+**What I did**: Set up the tools and accounts required for the assignment and customized the starter code.
 
 **Details**:
+- Reviewed assignment requirements for development environment.
+- Software installed & downloaded
+- Installed Git in my computer.
+- Create my GitHub account with my university email.
+- Linked my GitHub account to the development tools.
+- Forked the starter repo to my GitHub account.
+- Renamed the repository in accordance with the assignment instructions.
+- Confirmed the repository was public.
+- Updated student ID in SchedulerSimuation.java to 446051753.- Committed and pushed student ID change to GitHub.
+**Challenges**: The hardest part was to make sure that all the necessary tools (Git, GitHub and the repository) were correctly linked together before starting the coding part of the assignment.
+**Solution**: I followed the setup instructions step by step, verified that it all worked with Git and Github, and then tested the connection to the repository by changing my student ID and successfully pushing the first commit.
+**Time spent**: about 2h.
 
-**Challenges**:
-
-**Solution**:
-
-**Time spent**:
-
----
-
-### Entry 2 - [Date and Time]
-**What I did**:
-
-**Details**:
-
-**Challenges**:
-
-**Solution**:
-
-**Time spent**:
-
----
-
-### Entry 3 - [Date and Time]
-**What I did**:
+### Entry 2 - [October 6, 2026, 5:30 PM]
+**What I did**: Before starting the implementation, I have opened the project in Visual Studio Code and read the assignment requirements.
 
 **Details**:
-
+-opened my forked repo in Visual studio code.
+- Read carefully the README.md file to find out the complete assignment instructions.
+- Reviewed the SchedulerSimulation.Java from the very beginning.
+- Studied the Process class and SchedulerSimulation class work together.
+- Followed the implementation of ready queue, time quantum, burst time, remaining time and threads of the program.
+- Executed the original program and compared its output to the program.
+- Examined the specifications for the three features: Tracking waiting times, context switch counters, and process priorities.
+- Determined which sections of the code would require the addition of each feature without altering the Round-Robin FIFO behavior.
 **Challenges**:
-
+Understanding the original program's flow and determining where each necessary feature should be added without changing the scheduling logic that was already in place presented the biggest challenge.
 **Solution**:
+I went over the README once more and executed it step-by-step, starting with process creation and continuing through addProcessToQueue(), Thread.start(), run(), and Thread.join(). I was also able to make the connection between each section of the code and the output by running the original code.
+**Time spent**:about 2h.
 
-**Time spent**:
-
----
-
-### Entry 4 - [Date and Time]
-**What I did**:
+### Entry 3 - [October 7, 2026, 7:00 PM]
+**What I did**:Implemented the first two required features and tested them separately.
 
 **Details**:
-
+ -The Process class now has a priority field.
+-For every process, a random priority value between 1 and 10 was generated.
+- The getPriority() and setPriority() functions were added.
+-Every time a process joined the ready queue, the priority was shown.
+-Ensured that the Round-Robin ready queue's FIFO order remained unchanged and that priority was only displayed.
+-A static context was added.SchedulerSimulation's SwitchCount variable.
+-The counter was increased prior to the current thread.begin().
+-At the conclusion of the simulation, the total number of context switches was printed.
+-After every feature, the program was run to ensure proper operation.
+-For every feature, a distinct commit was made.
 **Challenges**:
+The main challenge was determining the exact location of each new line addition without altering the original scheduling logic. It was also necessary to ensure that the priority feature did not inadvertently impact the order of the ready queue.
 
 **Solution**:
+I added the priority-related code to the Process class and the addProcessToQueue() method, and then placed the context-switch counter directly before the currentThread.start() method in the scheduler loop. After making each change, I ran the program and checked the output before committing it.
+**Time spent**:about more than 3h.
 
-**Time spent**:
-
----
-
-### Entry 5 - [Date and Time]
-**What I did**:
+### Entry 4 - [October 8, 2026, 7:30 PM]
+**What I did**:I started implementing Feature 3 (Waiting Time Tracking) and studied how to measure the time each process spends in the ready queue.
 
 **Details**:
+- Reviewed the Round-Robin behaviour to understand how a process can enter the ready queue more than once.
+- Added the queueEnterTime and totalWaitingTime fields to the Process class.
+- Used System.currentTimeMillis() to record when a process entered the ready queue.
+- Methods were added to mark the queue entry time and update the accumulated waiting time.
+- Added the getWaitingTime() and getTurnaroundTime() methods.
+- Used the required formula for turnaround time (waiting time plus burst time).
+- Planned how to keep all processes available for the final summary after execution.
 
 **Challenges**:
+The main challenge was correctly calculating waiting time because a process can be re-queued several times in Round-Robin scheduling. It was necessary to ensure that each waiting period was added to the previous waiting time rather than replacing it.
 
 **Solution**:
+I decided to record a new queue entry time each time the process was added to the ready queue. When the process was selected for execution, I then calculated the difference between the current time and the last queue entry time, adding this value to totalWaitingTime.
 
-**Time spent**:
+**Time spent**: about 2h.
 
----
+### Entry 5 - [October 9, 2026, 5:00 PM]
+**What I did**:Completed Feature 3, added the final process summary and tested the full programme incorporating all three features.
+
+**Details**:
+- Created an allProcesses map using a LinkedHashMap to store references to all Process objects for the final report.
+- Stored each process in allProcesses when it was created.
+- Recorded the queue entry time whenever a process was added to the ready queue.
+- Updated the waiting time whenever a process was selected from the queue to run.
+- Created the final Process Summary table containing Process Name, Burst Time, Waiting Time and Turnaround Time.
+Ran the complete program and verified that all three features worked together correctly.
+- Verified that the final output showed 37 context switches.
+- Checked the waiting and turnaround time values in the final summary.
+- Created and pushed the final Feature 3 commit.
+**Challenges**:
+The main challenge was ensuring that the final summary still contained every process, even after it had finished and left the ready queue. I also needed to confirm that the waiting time values had been accumulated across multiple rounds.
+**Solution**:
+I used an allProcesses map with a LinkedHashMap to retain all Process objects in their original insertion order until the end of the program. After that, I tested the final output and checked several processes to ensure that the summary had been printed correctly.
+**Time spent**: about 3h.
+
 
 ### Entry 6 - [Optional - Date and Time]
 **What I did**:
