@@ -242,15 +242,13 @@ I used an allProcesses map with a LinkedHashMap to retain all Process objects in
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: about 12 hours
 
-**Most challenging part**:
+**Most challenging part**: Implementing the waiting-time tracking feature was the most challenging part because a process can enter the ready queue multiple times during Round-Robin scheduling. I had to ensure that each waiting period was calculated and added correctly, rather than replacing the previous value.
 
-**Most interesting learning**:
+**Most interesting learning**: The most interesting aspect was grasping how Java threads could be utilised to simulate CPU scheduling. I especially enjoyed seeing how Thread.start(), Thread.join() and Thread.sleep() worked together with the ready queue and the time quantum during execution.
 
-**What I would do differently next time**:
-
----
+**What I would do differently next time**: Next time, I would take more detailed notes on each test and its output while implementing the features. This would make the documentation process easier and help me to compare the behaviour of the programme before and after each change.
 
 # Part B: Reflection (0.5 mark)
 
@@ -267,8 +265,8 @@ I used an allProcesses map with a LinkedHashMap to retain all Process objects in
 > 💡 **TIP:** Talk about thread creation (`Runnable`, `Thread.start()`), waiting with `Thread.join()`, simulating work with `Thread.sleep()`, and what surprised you.
 
 **Your Answer:** *(5-7 sentences)*
-
-[Write your answer here.]
+[
+I learned that multithreading enables different units of execution to be managed within the same Java programme. In this assignment, the Process class implements Runnable, enabling a Process object to be executed by a Java thread. I also understood that the start() method in Thread begins the execution of the run() method in a new thread. I also learned that Thread.join() causes the main scheduler thread to wait until the selected thread has finished executing. The Thread.sleep() method is used inside the run() method to simulate the time a process spends using the CPU. Completing this assignment helped me to connect Java threading concepts with operating system concepts such as the ready queue, time quantum and round-robin scheduling.]
 
 ## Question 2: What was the most challenging part of this assignment?
 
@@ -276,7 +274,8 @@ I used an allProcesses map with a LinkedHashMap to retain all Process objects in
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+[
+The most challenging part of this assignment was implementing the waiting-time tracking feature. In Round-Robin scheduling, a process can enter the ready queue more than once before it finishes. Because of this, I could not calculate the waiting time only once for each process. I had to record the queue-entry time each time the process was added to the ready queue and then accumulate the waiting periods. I also needed to keep the process information available until the end so I could print the final summary table. This feature took the most time because I had to understand both the scheduling flow and the timing logic before the output became correct.]
 
 ## Question 3: How did you overcome the challenges you faced?
 
@@ -284,7 +283,7 @@ I used an allProcesses map with a LinkedHashMap to retain all Process objects in
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+[I overcame the challenges by working on the assignment step by step, rather than trying to change everything at once. I re-read the README.md file carefully and followed the code to understand where each feature should be added. After making each small change, I ran the program and checked the output before moving on to the next step. For instance, I verified that the priorities were displayed correctly without altering the FIFO ready queue, and subsequently confirmed that the final output reported 37 context switches. I also observed P1 through several scheduling rounds to understand how re-queuing and waiting time worked. Comparing the code with the actual output enabled me to identify errors more quickly and improved my understanding of the scheduling logic.]
 
 ## Question 4: How can you apply multithreading concepts in real-world applications?
 
@@ -292,7 +291,7 @@ I used an allProcesses map with a LinkedHashMap to retain all Process objects in
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+[Multithreading is useful for applications that need to handle several tasks without making the whole program unresponsive. For instance, a web browser might use different threads to load network data, display the page and respond to user input. Similarly, a music application can use one thread for audio playback while another updates the user interface or downloads information. This is similar to my scheduling simulation, in which several tasks require execution time and the system must control when each one runs. Using multiple threads can improve responsiveness because one slow task does not stop the others. Completing this assignment helped me to understand how useful thread scheduling and coordination can be in real software.]
 
 ### Optional: What would you like to learn more about?
 
@@ -324,7 +323,7 @@ I used an allProcesses map with a LinkedHashMap to retain all Process objects in
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+[A process is an independent program running with its own memory and resources. A thread, on the other hand, is a smaller unit of execution that usually shares memory and resources with other threads in the same process. Threads typically have lower creation overheads and can communicate more quickly because they share the same address space. In this assignment, the Process class represents a simulated CPU process, but the actual Java execution is performed by a thread. Inside the addProcessToQueue() method, the statement new Thread(process) creates a real Java thread to run the simulated process object.]
 
 ## Question 2: Ready Queue Behavior
 
@@ -336,15 +335,38 @@ I used an allProcesses map with a LinkedHashMap to retain all Process objects in
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+[In my programme, P1 had a burst time of 12,436 ms, whereas the time quantum was 5,000 ms. After the first time quantum, P1 still had 7,436 ms remaining, so it was added back to the ready queue. After the second quantum, P1 had 2436 ms remaining, meaning it was re-queued twice before finishing. Re-queuing is important for fairness, as it ensures that other ready processes receive CPU time before P1 gets another turn.]
 
 Example from my output:
 ```
-[Paste a relevant snippet from your program output here showing a process being re-queued]
+[P1 executing quantum [5000ms]
+P1 completed quantum 5000ms
+Remaining time: 7436ms
+P1 yields CPU for context switch
+
+P1 added to ready queue | Burst time: 12436ms
+Priority: 4
+
+...
+
+P1 executing quantum [5000ms]
+P1 completed quantum 5000ms
+Remaining time: 2436ms
+P1 yields CPU for context switch
+
+P1 added to ready queue | Burst time: 12436ms
+Priority: 4
+
+...
+
+P1 executing quantum [2436ms]
+P1 completed quantum 2436ms
+Remaining time: 0ms
+P1 finished execution!]
 ```
 
 **Explanation of example:**
-[Explain what is happening in the output snippet you pasted.]
+[The output shows that P1 required more CPU time than a single time quantum. After its first two turns, there was still more than zero time remaining, so the scheduler placed it at the back of the FIFO ready queue. On its third turn, P1 executed for a further 2,436 ms and then finished.]
 
 ## Question 3: Thread Lifecycle
 
@@ -354,15 +376,15 @@ Example from my output:
 
 **Your Answer:** *(3-5 sentences overall; one short explanation per state)*
 
-1. **New**: [When is P1 in the New state?]
+1. **New**: [P1 is in the New state when `new Thread(process)` creates its Java thread inside `addProcessToQueue()`, before `start()` is called.]
 
-2. **Runnable**: [When does P1 become Runnable?]
+2. **Runnable**: [P1 becomes Runnable when the scheduler calls `currentThread.start()`, which makes the thread ready to be scheduled by the JVM.]
 
-3. **Running**: [When is P1 Running?]
+3. **Running**: [P1 is Running when its `run()` method is actually executing and updating its quantum progress and remaining time.]
 
-4. **Waiting**: [When and why would a thread be Waiting?]
+4. **Waiting**: [During `Thread.sleep(stepTime)`, P1 temporarily enters a timed waiting state. The `currentThread.join()` call makes the main scheduler thread wait for P1, not P1 itself.]
 
-5. **Terminated**: [When is P1 Terminated?]
+5. **Terminated**: [P1's Java thread becomes Terminated when its `run()` method finishes. If the simulated P1 process still has remaining time, a new Thread object is created for the same Process object when it is added back to the ready queue.]
 
 ## Question 4: Real-World Applications
 
@@ -372,34 +394,33 @@ Example from my output:
 
 **Your Answer:** *(3-5 sentences per example)*
 
-### Example 1 (operating-system level): [Name of scenario]
+### Example 1 (operating-system level): [CPU scheduling between running programs]
 
 **Description**:
-[Describe the real-world scenario.]
+[An operating system may have many programs requiring CPU time simultaneously. Each program acts as a process and the scheduler allocates a fixed time quantum to each one. Switching from one program to another is similar to a context switch in my simulation.]
 
 **Why Round-Robin works well here**:
-[Fairness, responsiveness, predictability?]
+[Round-Robin is fair because every ready process gets a turn. It also improves responsiveness because no single process can monopolise the CPU for too long. The fixed time quantum makes CPU sharing more predictable.]
 
-### Example 2: [Name of application/scenario]
+### Example 2: [ Web Server Handling Client Requests]
 
 **Description**:
-[Describe the real-world scenario or application.]
+[A web server may receive many client requests at the same time. Each request can be treated as a task that is allocated a limited amount of processing time. Switching from one request to another is similar to a context switch.
+]
 
 **Why Round-Robin works well here**:
-[Fairness, responsiveness, predictability?]
+[ Round-robin gives each request a fair chance to be processed. It improves responsiveness when many users are waiting. It also prevents one large request from monopolising all the processing time.]
 
 ## Summary
 
 **Key concepts I understood through these questions:**
-1.
-2.
-3.
+1. The difference between a process and a thread.
+2. How round-robin uses a time quantum and a ready queue.
+3. How context switching works.
 
 **Concepts I need to study more:**
-1.
-2.
-
----
+1.Thread synchronization.
+2. Other CPU scheduling algorithms.
 
 # ✅ Final Checklist (complete before submitting)
 
