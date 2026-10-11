@@ -39,7 +39,7 @@
 
 ## 🎥 Video Link
 
-**Video Link**: [](https://drive.google.com/drive/folders/1nqDCIbbZA7PtIXBPq_sdKLe0cAju_9dy?usp=sharing)
+**Video Link**: [https://drive.google.com/drive/folders/1nqDCIbbZA7PtIXBPq_sdKLe0cAju_9dy?usp=sharing]
 
 > ⚠️ **WARNING:** The video must be **publicly accessible** ("Anyone with the link can view") on **Google Drive**, **YouTube (Unlisted or Public)** or any other cloud file-sharing system. A private, restricted or broken link counts as a **missing video (-1 mark)**.
 >
